@@ -17,7 +17,7 @@ const checkoutRoutes = (router: Router) => {
   );
   router.patch(
     "/:orderId",
-    checkRole([Role.CUSTOMER]),
+    checkRole([Role.SELLER]),
     ensureOrderIdInParamsMiddleware,
     validateUpdateOrderStatusRequestBodyMiddleware,
     asyncHandler(updateOrderStatusHandler as any)
