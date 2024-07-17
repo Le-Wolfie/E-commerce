@@ -1,0 +1,5 @@
+{
+  "watch": ["src"],
+  "ext": "ts,js",
+  "exec": "cross-env NODE_ENV=development node --env-file=.env dist/index.js"
+}
