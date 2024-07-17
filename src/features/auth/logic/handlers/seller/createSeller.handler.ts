@@ -16,6 +16,11 @@ type HandlerRequest = Request<
 const createSellerHandler = async (req: HandlerRequest, res: Response) => {
   const { email, password, storeName } = req.body;
 
+  if (!storeName) {
+    res.status(400).json({ errors: [{ message: "Store name is required" }] });
+    return;
+  }
+
   const hashedPassword = await bcrypt.hash(password, 10);
   const createdSeller = await SellerModel.create({
     email,
