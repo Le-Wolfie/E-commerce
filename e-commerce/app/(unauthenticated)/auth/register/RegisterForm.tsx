@@ -8,6 +8,10 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { registerUserAction } from "./actions";
+import { Button } from "@/components/ui/button";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { Label } from "@/components/ui/label";
+import { Input } from "@/components/ui/input";
 
 const registerFormSchema = z.object({
   email: z.string().email(),
@@ -46,23 +50,38 @@ export default function RegisterForm() {
     >
       <div className='flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
-          <label>Email</label>
-          <input {...register("email")} type='email' />
+          <Label htmlFor='email'>Email</Label>
+          <Input
+            {...register("email")}
+            type='email'
+            placeholder='Your Email Address'
+          />
           {errors.email && (
             <span className='text-red-500'>{errors.email.message}</span>
           )}
         </div>
         <div className='flex flex-col gap-2'>
-          <label>Password</label>
-          <input {...register("password")} type='password' />
+          <Label htmlFor='password'>Password</Label>
+          <Input
+            {...register("password")}
+            type='password'
+            placeholder='Your Password'
+          />
           {errors.password && (
             <span className='text-red-500'>{errors.password.message}</span>
           )}
         </div>
       </div>
-      <button className='btn-primary' type='submit' disabled={isSubmitting}>
-        {isSubmitting ? "Registering..." : "Register"}
-      </button>
+      <Button variant='outline' type='submit' disabled={isSubmitting}>
+        {isSubmitting ? (
+          <>
+            <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+            {"Registering..."}
+          </>
+        ) : (
+          "Register"
+        )}
+      </Button>
     </form>
   );
 }

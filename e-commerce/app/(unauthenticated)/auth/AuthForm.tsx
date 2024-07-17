@@ -8,6 +8,10 @@ import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { ReloadIcon } from "@radix-ui/react-icons";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const authFormSchema = z.object({
   email: z.string().email(),
@@ -53,23 +57,38 @@ export default function AuthForm() {
     >
       <div className='flex flex-col gap-4'>
         <div className='flex flex-col gap-2'>
-          <label>Email</label>
-          <input {...register("email")} type='email' />
+          <Label htmlFor='email'>Email</Label>
+          <Input
+            {...register("email")}
+            type='email'
+            placeholder='Your Email Address'
+          />
           {errors.email && (
             <span className='text-red-500'>{errors.email.message}</span>
           )}
         </div>
         <div className='flex flex-col gap-2'>
-          <label>Password</label>
-          <input {...register("password")} type='password' />
+          <Label htmlFor='password'>Password</Label>
+          <Input
+            {...register("password")}
+            type='password'
+            placeholder='Your Password'
+          />
           {errors.password && (
             <span className='text-red-500'>{errors.password.message}</span>
           )}
         </div>
       </div>
-      <button className='btn-primary' type='submit' disabled={isSubmitting}>
-        {isSubmitting ? "Signing in..." : "Sign in"}
-      </button>
+      <Button variant='outline' type='submit' disabled={isSubmitting}>
+        {isSubmitting ? (
+          <>
+            <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+            {"Signing In..."}
+          </>
+        ) : (
+          "Sign In"
+        )}
+      </Button>
     </form>
   );
 }
