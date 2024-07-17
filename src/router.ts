@@ -1,11 +1,24 @@
 import { Router } from "express";
+import {
+  adminRoutes,
+  customerRoutes,
+  sellerRoutes,
+} from "./features/auth/auth.routes";
 
-import exampleRoutes from "./features/example/example.routes";
+export const adminRouter = () => {
+  const router = Router();
+  adminRoutes(router);
+  return router;
+};
 
-const router: Router = Router();
+export const customerRouter = () => {
+  const router = Router();
+  customerRoutes(router);
+  return router;
+};
 
-export default (): Router => {
-  exampleRoutes(router);
-
+export const sellerRouter = () => {
+  const router = Router();
+  sellerRoutes(router);
   return router;
 };
