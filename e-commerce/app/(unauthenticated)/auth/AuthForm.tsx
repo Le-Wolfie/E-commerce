@@ -61,7 +61,7 @@ export default function AuthForm() {
           <input {...register("password")} type='password' />
         </div>
       </div>
-      <button className='btn' type='submit' disabled={isSubmitting}>
+      <button className='btn-primary' type='submit' disabled={isSubmitting}>
         {isSubmitting ? "Signing in..." : "Sign in"}
       </button>
     </form>
