@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../../../data/models/user.model";
+import { CustomerModel } from "../../../data/models/customer.model";
 import { TokenPayload } from "../../../../../core/checkRole.middleware";
 
 type HandlerRequest = Request<
@@ -13,7 +13,7 @@ type HandlerRequest = Request<
 
 const updateCustomerHandler = async (req: HandlerRequest, res: Response) => {
   const { email, user } = req.body;
-  const customerToUpdate = await UserModel.findOneAndUpdate(
+  const customerToUpdate = await CustomerModel.findOneAndUpdate(
     { _id: user.userId },
     { ...(email && { email }) },
     { new: true }

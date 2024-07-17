@@ -13,13 +13,10 @@ import createSellerHandler from "./logic/handlers/seller/createSeller.handler";
 import updateSellerHandler from "./logic/handlers/seller/updateSeller.handler";
 import loginSellerHandler from "./logic/handlers/seller/loginSeller.handler";
 import deleteSellerHandler from "./logic/handlers/seller/deleteSeller.handler";
+import validateEmailMiddleware from "./logic/middlewares/validateEmail.middleware";
 
 const adminRoutes = (router: Router) => {
-  router.post(
-    "/",
-
-    asyncHandler(createAdminHandler)
-  );
+  router.post("/", validateEmailMiddleware, asyncHandler(createAdminHandler));
   router.post(
     "/login",
 
@@ -37,7 +34,7 @@ export { adminRoutes };
 const customerRoutes = (router: Router) => {
   router.post(
     "/",
-
+    validateEmailMiddleware,
     asyncHandler(createCustomerHandler)
   );
   router.patch(
@@ -60,11 +57,7 @@ const customerRoutes = (router: Router) => {
 export { customerRoutes };
 
 const sellerRoutes = (router: Router) => {
-  router.post(
-    "/",
-
-    asyncHandler(createSellerHandler)
-  );
+  router.post("/", validateEmailMiddleware, asyncHandler(createSellerHandler));
   router.patch(
     "/",
     checkRole([Role.SELLER]),

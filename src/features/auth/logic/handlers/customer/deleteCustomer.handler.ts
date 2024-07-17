@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { UserModel } from "../../../../../features/auth/data/models/user.model";
+import { CustomerModel } from "../../../../../features/auth/data/models/customer.model";
 
 type HandlerRequest = Request<
   {},
@@ -11,7 +11,7 @@ type HandlerRequest = Request<
 
 const deleteCustomerHandler = async (req: HandlerRequest, res: Response) => {
   const { email } = req.body;
-  const customerToDelete = await UserModel.findOneAndDelete({
+  const customerToDelete = await CustomerModel.findOneAndDelete({
     email: email,
   });
   if (!customerToDelete) {

@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { Request, Response } from "express";
 import { Role } from "../../../../../core/checkRole.middleware";
-import { UserModel } from "../../../../../features/auth/data/models/user.model";
+import { CustomerModel } from "../../../../../features/auth/data/models/customer.model";
 
 type HandlerRequest = Request<
   {},
@@ -16,7 +16,7 @@ type HandlerRequest = Request<
 const loginCustomerHandler = async (req: HandlerRequest, res: Response) => {
   const { email, password } = req.body;
 
-  const customer = await UserModel.findOne({ email });
+  const customer = await CustomerModel.findOne({ email });
 
   if (!customer) {
     res.status(401).json({ errors: [{ message: "Invalid credentials" }] });
