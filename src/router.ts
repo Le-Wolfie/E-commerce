@@ -6,6 +6,7 @@ import {
 } from "./features/auth/auth.routes";
 import { productRoutes } from "./features/product/product.routes";
 import { cartRoutes } from "./features/cart/cart.routes";
+import { checkoutRoutes } from "features/checkout/checkout.routes";
 
 export const adminRouter = () => {
   const router = Router();
@@ -34,5 +35,11 @@ export const productRouter = () => {
 export const cartRouter = () => {
   const router = Router();
   cartRoutes(router);
+  return router;
+};
+
+export const checkoutRouter = () => {
+  const router = Router();
+  checkoutRoutes(router);
   return router;
 };
