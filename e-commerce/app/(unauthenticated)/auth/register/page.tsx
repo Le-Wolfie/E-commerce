@@ -1,16 +1,16 @@
-import Image from "next/image";
-import AuthForm from "./AuthForm";
 import Link from "next/link";
+import RegisterForm from "./RegisterForm";
+import Image from "next/image";
 
 export default function Page() {
   return (
     <div className='flex flex-row items-center justify-center w-full h-screen gap-32 p-8 bg-gray-100'>
       <div className='w-full max-w-md p-8 bg-white shadow-lg rounded-lg'>
-        <AuthForm />
+        <RegisterForm />
         <div className='mt-4 text-center'>
-          <span>Don't have an account? </span>
-          <Link className='text-blue-500 hover:underline' href='/auth/register'>
-            Create one!
+          <span>Already have an account? </span>
+          <Link className='text-blue-500 hover:underline' href='/auth'>
+            Sign in
           </Link>
         </div>
       </div>

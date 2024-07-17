@@ -4,46 +4,39 @@ import { z } from "zod";
 
 import { zodResolver } from "@hookform/resolvers/zod";
 
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
+import { registerUserAction } from "./actions";
 
-const authFormSchema = z.object({
+const registerFormSchema = z.object({
   email: z.string().email(),
-  password: z.string().min(1, "Enter a password"),
+  password: z.string().min(3, "Password must be at least 3 characters long"),
 });
 
-type AuthFormValues = z.infer<typeof authFormSchema>;
+export type registerFormValues = z.infer<typeof registerFormSchema>;
 
-export default function AuthForm() {
+export default function RegisterForm() {
   const router = useRouter();
   const {
     register,
     handleSubmit,
     formState: { isSubmitting, errors },
-  } = useForm<AuthFormValues>({
-    resolver: zodResolver(authFormSchema),
+  } = useForm<registerFormValues>({
+    resolver: zodResolver(registerFormSchema),
     defaultValues: { email: "", password: "" },
   });
 
-  const onSubmit = async (values: AuthFormValues) => {
-    const result = await signIn("credentials", {
-      redirect: false,
-      email: values.email,
-      password: values.password,
-    });
+  const onSubmit = async (values: registerFormValues) => {
+    const result = await registerUserAction(values);
 
-    if (result?.ok) {
-      toast.success(
-        "You have successfully signed in. Redirecting you to the homepage."
-      );
-      router.push("/");
-    } else {
-      toast.error(
-        "An error occurred while signing in. Please check your credentials."
-      );
+    if (!result.success) {
+      return toast.error(result.error?.message);
     }
+
+    toast.success("You have successfully registered!");
+
+    router.push("/");
   };
 
   return (
@@ -68,7 +61,7 @@ export default function AuthForm() {
         </div>
       </div>
       <button className='btn-primary' type='submit' disabled={isSubmitting}>
-        {isSubmitting ? "Signing in..." : "Sign in"}
+        {isSubmitting ? "Registering..." : "Register"}
       </button>
     </form>
   );
