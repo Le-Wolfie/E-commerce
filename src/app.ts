@@ -6,6 +6,7 @@ import express, { NextFunction, Request, Response } from "express";
 
 import {
   adminRouter,
+  cartRouter,
   customerRouter,
   productRouter,
   sellerRouter,
@@ -49,6 +50,7 @@ app.use("/admin", adminRouter());
 app.use("/customer", customerRouter());
 app.use("/seller", sellerRouter());
 app.use("/product", productRouter());
+app.use("/cart", cartRouter());
 
 // TODO: Custom 404 handler
 app.use((req: Request, res: Response, next: NextFunction) => {

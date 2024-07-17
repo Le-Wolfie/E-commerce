@@ -5,6 +5,7 @@ import {
   sellerRoutes,
 } from "./features/auth/auth.routes";
 import { productRoutes } from "./features/product/product.routes";
+import { cartRoutes } from "./features/cart/cart.routes";
 
 export const adminRouter = () => {
   const router = Router();
@@ -27,5 +28,11 @@ export const sellerRouter = () => {
 export const productRouter = () => {
   const router = Router();
   productRoutes(router);
+  return router;
+};
+
+export const cartRouter = () => {
+  const router = Router();
+  cartRoutes(router);
   return router;
 };
