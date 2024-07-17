@@ -2,32 +2,96 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
-}
-
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+* {
+  @apply text-slate-600;
+}
+
+.btn-danger {
+  @apply px-4 py-2 bg-red-500 text-white rounded-lg cursor-pointer hover:bg-red-700 active:bg-red-900 transition-colors duration-300 flex gap-2;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 bg-slate-100 text-slate-600 rounded-lg cursor-pointer hover:bg-slate-200 active:bg-slate-300 transition-colors duration-300 flex gap-2;
+
+}
+
+.btn {
+  @apply px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-700 active:bg-blue-900 transition-colors duration-300 flex gap-2;
+}
+
+a {
+  @apply p-2 rounded-lg cursor-pointer hover:bg-slate-100 transition-colors duration-300;
+}
+
+input,
+textarea,
+select {
+  @apply p-2 bg-slate-100 rounded-lg;
+}
+
+li {
+  @apply list-decimal;
+}
+
+select {
+  @apply appearance-none;
+}
+
+h1 {
+  @apply text-3xl font-bold;
+}
+
+h2 {
+  @apply text-2xl font-bold;
+}
+
+h3 {
+  @apply text-xl font-bold;
+}
+
+h4 {
+  @apply text-lg font-bold;
+}
+
+h5 {
+  @apply text-base font-bold;
+}
+
+h6 {
+  @apply text-sm font-bold;
+}
+
+.progress-ring__circle {
+  transition: stroke-dashoffset 0.5s;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+}
+
+/* width */
+::-webkit-scrollbar {
+  @apply w-3;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  @apply bg-slate-300;
+  @apply rounded-md;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-400;
+
+  @apply rounded-md;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  @apply hover:bg-slate-500
 }
