@@ -14,6 +14,7 @@ import updateSellerHandler from "./logic/handlers/seller/updateSeller.handler";
 import loginSellerHandler from "./logic/handlers/seller/loginSeller.handler";
 import deleteSellerHandler from "./logic/handlers/seller/deleteSeller.handler";
 import validateEmailMiddleware from "./logic/middlewares/validateEmail.middleware";
+import updateUserPasswordHandler from "./logic/handlers/updateUserPassword.handler";
 
 const adminRoutes = (router: Router) => {
   router.post("/", validateEmailMiddleware, asyncHandler(createAdminHandler));
@@ -21,6 +22,11 @@ const adminRoutes = (router: Router) => {
     "/login",
 
     asyncHandler(loginAdminHandler)
+  );
+  router.patch(
+    "/password",
+    checkRole([Role.ADMIN]),
+    asyncHandler(updateUserPasswordHandler as any)
   );
   router.delete(
     "/",
@@ -42,6 +48,11 @@ const customerRoutes = (router: Router) => {
     checkRole([Role.CUSTOMER]),
     asyncHandler(updateCustomerHandler as any)
   );
+  router.patch(
+    "/password",
+    checkRole([Role.CUSTOMER]),
+    asyncHandler(updateUserPasswordHandler as any)
+  );
   router.post(
     "/login",
 
@@ -62,6 +73,11 @@ const sellerRoutes = (router: Router) => {
     "/",
     checkRole([Role.SELLER]),
     asyncHandler(updateSellerHandler as any)
+  );
+  router.patch(
+    "/password",
+    checkRole([Role.SELLER]),
+    asyncHandler(updateUserPasswordHandler as any)
   );
   router.post(
     "/login",
