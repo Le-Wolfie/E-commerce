@@ -1,4 +1,4 @@
-import { UserModel } from "features/auth/data/models/user.model";
+import { UserModel } from "../../../../features/auth/data/models/user.model";
 import { validateRequestMiddleware } from "../../../../core/validateRequest.middleware";
 import * as validator from "express-validator";
 
