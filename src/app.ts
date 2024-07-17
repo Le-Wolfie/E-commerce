@@ -9,6 +9,7 @@ import {
   cartRouter,
   checkoutRouter,
   customerRouter,
+  orderRouter,
   productRouter,
   sellerRouter,
 } from "./router";
@@ -53,6 +54,7 @@ app.use("/seller", sellerRouter());
 app.use("/product", productRouter());
 app.use("/cart", cartRouter());
 app.use("/checkout", checkoutRouter());
+app.use("/order", orderRouter());
 
 // TODO: Custom 404 handler
 app.use((req: Request, res: Response, next: NextFunction) => {
