@@ -5,7 +5,7 @@ import { checkRole, Role } from "../../core/checkRole.middleware";
 import removeItemFromCartHandler from "./logic/handlers/removeItemFromCart.handler";
 import updateCartItemQuantityHandler from "./logic/handlers/updateCartItemQuantity.handler";
 import getCartHandler from "./logic/handlers/getCart.handler";
-import validateAddItemToCartMiddleware from "./logic/middlewares/validateaddItemToCart.middleware";
+import validateAddItemToCartMiddleware from "./logic/middlewares/validateAddItemToCart.middleware";
 import validateQuantityMiddleware from "./logic/middlewares/validateQuantity.middleware";
 
 const cartRoutes = (router: Router) => {
