@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductModel } from "../../../product/data/models/product.model";
+import { OrderModel } from "../../../checkout/data/models/order.model";
 
 type HandlerRequest = Request<
   {
@@ -23,6 +24,23 @@ const deleteProductHandler = async (req: HandlerRequest, res: Response) => {
       ],
     });
     return;
+  }
+
+  const productOrders = await OrderModel.find({
+    "items.product": productToDelete._id,
+  });
+
+  if (productOrders.length > 0) {
+    for (const order of productOrders) {
+      order.items = order.items.filter(
+        (item) => item.product.toString() !== productToDelete._id.toString()
+      );
+      await order.save();
+
+      if (order.items.length === 0) {
+        await OrderModel.findByIdAndDelete(order._id);
+      }
+    }
   }
 
   const response = {
