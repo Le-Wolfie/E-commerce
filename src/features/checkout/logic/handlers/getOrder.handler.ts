@@ -24,8 +24,11 @@ const getOrderHandler = async (req: HandlerRequest, res: Response) => {
     });
     return;
   }
+  const response = {
+    order,
+  };
 
-  res.status(200).json(order);
+  res.status(200).json(response);
 };
 
 export default getOrderHandler;
