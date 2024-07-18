@@ -1,15 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { registerFormValues } from "./RegisterForm";
-import { authAPI } from "@/api";
+import { registerFormValues } from "../_components/RegisterForm";
+import { backendAPI } from "@/api";
 
 export const registerUserAction = async (data: registerFormValues) => {
   const requestBody = {
     ...data,
   };
 
-  const response = await authAPI.post(`/customer`, requestBody);
+  const response = await backendAPI.post(`/customer`, requestBody);
 
   console.log(response.data);
 

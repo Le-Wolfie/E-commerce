@@ -1,5 +1,5 @@
 import Image from "next/image";
-import AuthForm from "./AuthForm";
+import AuthForm from "./_components/AuthForm";
 import Link from "next/link";
 
 export default function Page() {
