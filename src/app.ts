@@ -12,6 +12,7 @@ import {
   orderRouter,
   productRouter,
   sellerRouter,
+  statsRouter,
 } from "./router";
 import { isDev } from "./env";
 import logger from "./core/logger";
@@ -55,6 +56,7 @@ app.use("/product", productRouter());
 app.use("/cart", cartRouter());
 app.use("/checkout", checkoutRouter());
 app.use("/order", orderRouter());
+app.use("/stats", statsRouter());
 
 // TODO: Custom 404 handler
 app.use((req: Request, res: Response, next: NextFunction) => {

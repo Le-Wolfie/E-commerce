@@ -8,6 +8,7 @@ import { productRoutes } from "./features/product/product.routes";
 import { cartRoutes } from "./features/cart/cart.routes";
 import { checkoutRoutes } from "./features/checkout/checkout.routes";
 import { orderRoutes } from "./features/order/order.routes";
+import { statsRoutes } from "./features/stats/stats.routes";
 
 export const adminRouter = () => {
   const router = Router();
@@ -48,5 +49,11 @@ export const checkoutRouter = () => {
 export const orderRouter = () => {
   const router = Router();
   orderRoutes(router);
+  return router;
+};
+
+export const statsRouter = () => {
+  const router = Router();
+  statsRoutes(router);
   return router;
 };
