@@ -7,6 +7,8 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { getAccessToken } from "@/lib";
+import { getOrdersData, OrdersTable } from "./orders/page";
+import { PageHeader } from "./_components/PageHeader";
 
 type DashboardCardProps = {
   title: string;
@@ -32,24 +34,6 @@ const getTotalUsers = async () => {
   return response.data;
 };
 
-const getOrdersData = async () => {
-  const accessToken = await getAccessToken();
-
-  const response = await backendAPI.get(`/stats/orders-data`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
-    },
-  });
-
-  if (response.status !== 200) {
-    throw new Error(
-      response.data.errors.map((error: any) => error.message).join(", ")
-    );
-  }
-
-  return response.data;
-};
-
 export default async function Dashboard() {
   const [{ totalUsers }, { orders, total }] = await Promise.all([
     getTotalUsers(),
@@ -57,41 +41,33 @@ export default async function Dashboard() {
   ]);
 
   return (
-    <div className='flex flex-col gap-4'>
-      <DashBoardCard
-        title='Total Users'
-        description='Total number of users'
-        body={`${totalUsers} users are registered in the system`}
-      />
-      <DashBoardCard
-        title='Total Orders'
-        description='Total number of orders'
-        body={`${total} orders have been placed`}
-      />
+    <>
+      <div className='flex justify-between items-center gap-4'>
+        <PageHeader>Dashboard</PageHeader>
+      </div>
+      <div className='flex flex-col gap-4'>
+        <DashBoardCard
+          title='Total Users'
+          description='Total number of users'
+          body={`${totalUsers} users are registered in the system`}
+        />
+        <DashBoardCard
+          title='Total Orders'
+          description='Total number of orders'
+          body={`${total} orders have been placed`}
+        />
 
-      <Card>
-        <CardHeader>
-          <CardTitle>Orders Data</CardTitle>
-          <CardDescription>Orders data for the last 7 days</CardDescription>
-        </CardHeader>
-        <CardContent>
-          {orders.map((order: any, index: any) => (
-            <div key={index} className='flex justify-between py-4'>
-              <p>{`Ordered by ${order.user.email}`}</p>
-              <p>{`Items : ${order.items.map((item: any, index: any) => {
-                return `${item.product.name} x ${item.quantity}${
-                  index === order.items.length - 1 ? "" : " "
-                }`;
-              })}`}</p>
-              <p>{`Shipped to ${order.shippingAddress}`}</p>
-              <p>{`Payment Status: ${order.paymentStatus}`}</p>
-              <p>{`Order Status: ${order.orderStatus}`}</p>
-              <p>{`Total Price: ${order.totalPrice}`}</p>
-            </div>
-          ))}
-        </CardContent>
-      </Card>
-    </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Orders Data</CardTitle>
+            <CardDescription>Orders data for the last 7 days</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <OrdersTable />
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 }
 

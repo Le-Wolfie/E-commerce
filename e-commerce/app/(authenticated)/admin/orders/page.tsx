@@ -18,7 +18,7 @@ import {
 import { MoreVertical } from "lucide-react";
 import Link from "next/link";
 
-const getOrdersData = async () => {
+export const getOrdersData = async () => {
   const accessToken = await getAccessToken();
 
   const response = await backendAPI.get(`/stats/orders-data`, {
@@ -47,7 +47,7 @@ export default async function AdminOrders() {
   );
 }
 
-async function OrdersTable() {
+export async function OrdersTable() {
   const { orders, total } = await getOrdersData();
   return (
     <Table>
