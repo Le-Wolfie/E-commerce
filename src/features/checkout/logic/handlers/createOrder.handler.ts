@@ -5,6 +5,7 @@ import {
   OrderModel,
 } from "../../../checkout/data/models/order.model";
 import { UserModel } from "../../../auth/data/models/user.model";
+import { ProductModel } from "../../../product/data/models/product.model";
 
 type HandlerRequest = Request<
   {},
@@ -39,6 +40,21 @@ const createOrderHandler = async (req: HandlerRequest, res: Response) => {
       ],
     });
     return;
+  }
+
+  // check if all products exist
+  for (const item of items) {
+    const product = await ProductModel.findById(item.product);
+    if (!product) {
+      res.status(404).json({
+        errors: [
+          {
+            message: `Product with id ${item.product} not found`,
+          },
+        ],
+      });
+      return;
+    }
   }
 
   const order = await OrderModel.create({
