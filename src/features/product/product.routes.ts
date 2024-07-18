@@ -26,8 +26,9 @@ const productRoutes = (router: Router) => {
     asyncHandler(updateProductHandler as any)
   );
   router.delete(
-    "/",
+    "/:code",
     checkRole([Role.ADMIN]),
+    ensureProductCodeInParamsMiddleware,
     asyncHandler(deleteProductHandler as any)
   );
 
