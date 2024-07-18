@@ -4,11 +4,20 @@ import Link from "next/link";
 import {
   Table,
   TableBody,
+  TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
 import { backendAPI } from "@/api";
+import { MoreVertical } from "lucide-react";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import DeleteProductForm from "./_components/DeleteProductForm";
 
 const getProducts = async () => {
   const response = await backendAPI.get(`/product`);
@@ -36,7 +45,8 @@ export default function AdminProducts() {
   );
 }
 
-function ProductsTable() {
+async function ProductsTable() {
+  const { products } = await getProducts();
   return (
     <Table>
       <TableHeader>
@@ -46,7 +56,32 @@ function ProductsTable() {
           <TableHead>Stock</TableHead>
         </TableRow>
       </TableHeader>
-      <TableBody></TableBody>
+      <TableBody>
+        {products.map((product: any) => (
+          <TableRow key={product.id}>
+            <TableCell>{product.name}</TableCell>
+            <TableCell>{product.price}</TableCell>
+            <TableCell>{product.stock}</TableCell>
+            <TableCell>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <MoreVertical />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent>
+                  <DropdownMenuItem asChild>
+                    <Link href={`/admin/products/${product.id}`}>Edit</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <div className='flex justify-start'>
+                      <DeleteProductForm code={product.code} />
+                    </div>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </TableCell>
+          </TableRow>
+        ))}
+      </TableBody>
     </Table>
   );
 }
