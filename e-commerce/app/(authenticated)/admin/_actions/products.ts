@@ -19,7 +19,6 @@ export const addProductAction = async (data: AddProductFormValues) => {
     },
   });
 
-  console.log(response.data);
 
   if (response.status !== 201) {
     return {
@@ -79,7 +78,6 @@ export const editProductAction = async (data: EditProductFormValues) => {
     }
   );
 
-  console.log(response.data);
 
   if (response.status !== 200) {
     return {

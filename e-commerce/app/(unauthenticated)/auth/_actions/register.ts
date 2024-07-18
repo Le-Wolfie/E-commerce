@@ -11,7 +11,6 @@ export const registerUserAction = async (data: registerFormValues) => {
 
   const response = await backendAPI.post(`/customer`, requestBody);
 
-  console.log(response.data);
 
   if (response.status !== 201) {
     return {
