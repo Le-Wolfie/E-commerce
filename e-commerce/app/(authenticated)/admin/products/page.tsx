@@ -69,7 +69,9 @@ async function ProductsTable() {
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
                   <DropdownMenuItem asChild>
-                    <Link href={`/admin/products/${product.id}`}>Edit</Link>
+                    <Link href={`/admin/products/edit/${product.code}`}>
+                      Edit
+                    </Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem asChild>
                     <div className='flex justify-start'>
