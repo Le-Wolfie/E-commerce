@@ -23,7 +23,6 @@ export default async function Layout({
         <NavLink href={`/admin`}>Dashboard</NavLink>
         <NavLink href={`/admin/products`}>Products</NavLink>
         <NavLink href={`/admin/orders`}>Orders</NavLink>
-        <NavLink href={`/admin/users`}>Customers</NavLink>
       </Navbar>
       <div className='container my-6'>{children}</div>
     </>
