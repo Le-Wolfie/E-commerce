@@ -2,7 +2,7 @@ import { backendAPI } from "@/api";
 import { PageHeader } from "../../../_components/PageHeader";
 import EditProductForm from "../../_components/EditProductform";
 
-const getProduct = async (code: string) => {
+export const getProduct = async (code: string) => {
   const response = await backendAPI.get(`/product/${code}`);
 
   if (response.status !== 200) {
