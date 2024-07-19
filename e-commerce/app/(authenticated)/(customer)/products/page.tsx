@@ -9,22 +9,10 @@ import {
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
-import AddToCartForm from "./cart/_components/AddToCartForm";
+import AddToCartForm from "../cart/_components/AddToCartForm";
 
-const getMostPopularProducts = async () => {
-  const response = await backendAPI.get(`/stats/most-popular`);
-
-  if (response.status !== 200) {
-    throw new Error(
-      response.data.errors.map((error: any) => error.message).join(", ")
-    );
-  }
-
-  return response.data;
-};
-
-const getNewestProducts = async () => {
-  const response = await backendAPI.get(`/stats/newest-products`);
+const getProducts = async () => {
+  const response = await backendAPI.get(`/product`);
 
   if (response.status !== 200) {
     throw new Error(
@@ -35,14 +23,16 @@ const getNewestProducts = async () => {
   return response.data;
 };
 
-export default async function Home() {
-  const [{ mostPopularProducts }, { newestProducts, total }] =
-    await Promise.all([getMostPopularProducts(), getNewestProducts()]);
+export default async function Products() {
+  const { products, total } = await getProducts();
   return (
     <>
       <div className='flex flex-col gap-4'>
-        <ProductGrid products={mostPopularProducts} title='Most Popular' />
-        <ProductGrid products={newestProducts} title='Newest Products' />
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5'>
+          {products.map((product: any) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
+        </div>
       </div>
     </>
   );
@@ -63,7 +53,7 @@ function ProductGrid({ products, title }: { products: any[]; title: string }) {
         </div>
       </CardHeader>
       <CardContent>
-        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-5'>
+        <div className='grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3'>
           {products.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
