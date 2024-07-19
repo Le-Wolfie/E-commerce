@@ -10,6 +10,7 @@ interface ICartItem {
 interface ICart extends Document {
   user: mongoose.Schema.Types.ObjectId;
   items: ICartItem[];
+  totalPrice: number;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -27,8 +28,16 @@ const CartItemSchema: Schema = new Schema({
 const CartSchema: Schema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   items: [CartItemSchema],
+  totalPrice: { type: Number, default: 0 },
   createdAt: { type: Date, default: Date.now },
   updatedAt: { type: Date, default: Date.now },
+});
+
+CartSchema.pre<ICart>("save", function (next) {
+  this.totalPrice = this.items.reduce((total, item) => {
+    return total + item.quantity * item.price;
+  }, 0);
+  next();
 });
 
 const CartModel = mongoose.model<ICart>("Cart", CartSchema);
