@@ -8,7 +8,7 @@ type HandlerRequest = Request<
   {},
   {
     email: string;
-    address?: string;
+    address: string;
     password: string;
   }
 >;
