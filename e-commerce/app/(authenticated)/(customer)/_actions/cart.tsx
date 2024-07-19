@@ -12,7 +12,6 @@ export const addToCartAction = async (data: AddToCartFormValues) => {
     ...data,
   };
 
-  console.log(requestBody);
 
   const response = await backendAPI.post(`/cart/add`, requestBody, {
     headers: {
