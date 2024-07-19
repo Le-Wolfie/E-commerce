@@ -28,7 +28,11 @@ const getCartHandler = async (req: HandlerRequest, res: Response) => {
     return;
   }
 
-  res.status(200).json(cart);
+  const response = {
+    cart,
+  };
+
+  res.status(200).json(response);
 };
 
 export default getCartHandler;
