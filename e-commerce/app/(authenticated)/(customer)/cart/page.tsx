@@ -6,7 +6,7 @@ import { getAccessToken } from "@/lib";
 import RemoveFromCartForm from "./_components/RemoveFromCartForm";
 import UpdateItemQuantityForm from "./_components/UpdateItemQuantityForm";
 
-const getCart = async () => {
+export const getCart = async () => {
   const accessToken = await getAccessToken();
   const response = await backendAPI.get(`/cart`, {
     headers: {
@@ -23,7 +23,7 @@ const getCart = async () => {
 
 export default async function Products() {
   const cart = await getCart();
-  if (!cart) {
+  if (!cart || cart.items.length == 0) {
     return <div>Cart is empty</div>;
   }
 
