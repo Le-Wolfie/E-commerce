@@ -10,6 +10,10 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import AddToCartForm from "./cart/_components/AddToCartForm";
+import { getServerSession } from "next-auth";
+import { tokenPayload } from "@/lib";
+import { Role } from "@/models/checkRole.middleware";
+import { redirect } from "next/navigation";
 
 const getMostPopularProducts = async () => {
   const response = await backendAPI.get(`/stats/most-popular`);
@@ -36,6 +40,11 @@ const getNewestProducts = async () => {
 };
 
 export default async function Home() {
+  const session = await getServerSession();
+  const role = tokenPayload(session).role;
+  if (role == Role.ADMIN) {
+    redirect("/admin");
+  }
   const [{ mostPopularProducts }, { newestProducts, total }] =
     await Promise.all([getMostPopularProducts(), getNewestProducts()]);
   return (
