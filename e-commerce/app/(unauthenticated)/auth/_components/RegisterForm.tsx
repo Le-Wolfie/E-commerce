@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 
 const registerFormSchema = z.object({
   email: z.string().email(),
+  address: z.string().min(1, "Address is required"),
   password: z.string().min(3, "Password must be at least 3 characters long"),
 });
 
@@ -28,7 +29,7 @@ export default function RegisterForm() {
     formState: { isSubmitting, errors },
   } = useForm<registerFormValues>({
     resolver: zodResolver(registerFormSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "", address: "", password: "" },
   });
 
   const onSubmit = async (values: registerFormValues) => {
@@ -58,6 +59,17 @@ export default function RegisterForm() {
           />
           {errors.email && (
             <span className='text-red-500'>{errors.email.message}</span>
+          )}
+        </div>
+        <div className='flex flex-col gap-2'>
+          <Label htmlFor='address'>Address</Label>
+          <Input
+            {...register("address")}
+            type='text'
+            placeholder='Your Address'
+          />
+          {errors.address && (
+            <span className='text-red-500'>{errors.address.message}</span>
           )}
         </div>
         <div className='flex flex-col gap-2'>
