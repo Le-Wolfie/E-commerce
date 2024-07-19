@@ -23,9 +23,5 @@ export const statsRoutes = (router: Router) => {
     "/most-popular",
     asyncHandler(getMostPopularProductsHandler as any)
   );
-  router.get(
-    "/newest-products",
-    paginate.middleware(),
-    asyncHandler(getNewestProductsHandler as any)
-  );
+  router.get("/newest-products", asyncHandler(getNewestProductsHandler as any));
 };

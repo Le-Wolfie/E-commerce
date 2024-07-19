@@ -33,7 +33,7 @@ const getMostPopularProductsHandler = async (
   );
 
   const response = {
-    products,
+    mostPopularProducts: products,
   };
 
   res.status(200).json(response);
