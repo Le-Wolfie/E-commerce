@@ -13,9 +13,9 @@ type HandlerRequest = Request<
 const getCartHandler = async (req: HandlerRequest, res: Response) => {
   const { user } = req.body;
 
-  const cart = await CartModel.findOne({ user: user.userId }).populate(
-    "items.product"
-  );
+  const cart = await CartModel.findOne({ user: user.userId })
+    .populate("user")
+    .populate("items.product");
 
   if (!cart) {
     res.status(404).json({
