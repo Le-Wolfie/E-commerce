@@ -77,7 +77,7 @@ export default function DeleteProductForm({ code }: { code: string }) {
       </AlertDialog> */}
       <button type='submit' disabled={isSubmitting}>
         {isSubmitting ? (
-          <ReloadIcon />
+          <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
         ) : (
           <p className='text-destructive'>Delete</p>
         )}

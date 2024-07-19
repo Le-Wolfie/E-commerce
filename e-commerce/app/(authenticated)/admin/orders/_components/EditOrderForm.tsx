@@ -97,7 +97,11 @@ export default function EditOrderForm({ order }: { order: any }) {
 
       <div className='flex justify-center'>
         <Button type='submit' variant={"default"} disabled={isSubmitting}>
-          {isSubmitting ? <ReloadIcon /> : "Update Status"}
+          {isSubmitting ? (
+            <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+          ) : (
+            "Update Status"
+          )}
         </Button>
       </div>
     </form>

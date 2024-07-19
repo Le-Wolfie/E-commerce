@@ -138,7 +138,11 @@ export default function AddProductForm() {
       </div>
       <div className='flex justify-center'>
         <Button type='submit' variant={"default"} disabled={isSubmitting}>
-          {isSubmitting ? <ReloadIcon /> : "Add Product"}
+          {isSubmitting ? (
+            <ReloadIcon className='mr-2 h-4 w-4 animate-spin' />
+          ) : (
+            "Add Product"
+          )}
         </Button>
       </div>
     </form>
