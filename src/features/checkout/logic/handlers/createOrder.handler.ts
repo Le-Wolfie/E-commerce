@@ -3,9 +3,12 @@ import { TokenPayload } from "../../../../core/checkRole.middleware";
 import {
   IOrderItem,
   OrderModel,
+  orderStatusEnum,
+  paymentStatusEnum,
 } from "../../../checkout/data/models/order.model";
-import { UserModel } from "../../../auth/data/models/user.model";
 import { ProductModel } from "../../../product/data/models/product.model";
+import { CustomerModel } from "../../../auth/data/models/customer.model";
+import { CartModel } from "../../../cart/data/models/cart.model";
 
 type HandlerRequest = Request<
   {},
@@ -13,23 +16,13 @@ type HandlerRequest = Request<
   {
     user: TokenPayload;
     items: IOrderItem[];
-    shippingAddress: string;
-    paymentStatus: string;
     totalPrice: number;
-    orderStatus: string;
   }
 >;
 
 const createOrderHandler = async (req: HandlerRequest, res: Response) => {
-  const {
-    user,
-    items,
-    shippingAddress,
-    paymentStatus,
-    totalPrice,
-    orderStatus,
-  } = req.body;
-  const customer = await UserModel.findOne({ _id: user.userId });
+  const { user, items, totalPrice } = req.body;
+  const customer = await CustomerModel.findOne({ _id: user.userId });
 
   if (!customer) {
     res.status(404).json({
@@ -60,11 +53,27 @@ const createOrderHandler = async (req: HandlerRequest, res: Response) => {
   const order = await OrderModel.create({
     user: customer._id,
     items,
-    shippingAddress,
-    paymentStatus,
+    shippingAddress: customer.address,
+    paymentStatus: paymentStatusEnum[1],
     totalPrice,
-    orderStatus,
+    orderStatus: orderStatusEnum[0],
   });
+
+  // empty the user's cart
+  const cart = await CartModel.findOne({ user: user.userId });
+  if (!cart) {
+    res.status(404).json({
+      errors: [
+        {
+          message: "Cart not found",
+        },
+      ],
+    });
+    return;
+  }
+
+  cart.items = [];
+  await cart.save();
 
   const response = {
     message: "Order created successfully",
