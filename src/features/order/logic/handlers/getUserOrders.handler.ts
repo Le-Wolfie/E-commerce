@@ -17,21 +17,14 @@ const getAuthenticatedUserOrdersHandler = async (
   const { user } = req.body;
 
   // find all this user's orders
-  const orders = await OrderModel.find({ user: user.userId })
+  const orders = await OrderModel.find(
+    { user: user.userId },
+    {},
+    { sort: { createdAt: -1 } }
+  )
     .skip(req.skip ?? 0)
     .limit(req.query.limit as unknown as number)
     .populate("items.product");
-
-  if (orders.length === 0) {
-    res.status(404).json({
-      errors: [
-        {
-          message: "Order not found",
-        },
-      ],
-    });
-    return;
-  }
 
   const total = await OrderModel.countDocuments({ user: user.userId });
 
